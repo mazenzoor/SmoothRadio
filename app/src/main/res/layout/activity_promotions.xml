@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#eee"
+    tools:context="cloud.thecode.smoothradio.promotions">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#dfdfdf"
+            android:textColor="#222"
+            android:textSize="17sp"
+            android:padding="25dp"
+            android:layout_marginBottom="20dp"
+            android:text="All prices below are in USD"
+            android:textAlignment="center"/>
+
+        <ImageButton
+            android:id="@+id/a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/web_hosting" />
+
+        <ImageButton
+            android:id="@+id/b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/audio_streaming" />
+
+        <ImageButton
+            android:id="@+id/c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:adjustViewBounds="true"
+            android:background="#00000000"
+            android:scaleType="fitCenter"
+            android:src="@drawable/domain_name" />
+
+    </LinearLayout>
+
+
+
+</ScrollView>
