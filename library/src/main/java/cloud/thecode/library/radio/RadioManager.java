@@ -175,7 +175,7 @@ public class RadioManager implements IRadioManager {
     @Override
     public void updateNotification(String singerName, String songName, int smallArt, Bitmap bigArt) {
         if(mService != null)
-            mService.updateNotification(singerName, songName, smallArt, bigArt);
+            mService.updateNotification("Smooth Radio", "Live", smallArt, bigArt);
     }
 
     /**
