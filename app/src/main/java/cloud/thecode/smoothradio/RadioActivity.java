@@ -37,7 +37,7 @@ public class RadioActivity extends Activity implements RadioListener{
 
     private final String[] RADIO_URL = {"http://in2streaming.com:9999"};
     TextView song_title_view;
-    ImageButton mButtonControlStart, fb, tw;
+    ImageButton mButtonControlStart, fb, tw, camera;
     RadioManager mRadioManager;
     ProgressBar loader;
     final int darkBlue = Color.parseColor("#222939");
@@ -70,6 +70,7 @@ public class RadioActivity extends Activity implements RadioListener{
         promotion = (LinearLayout) findViewById(R.id.promotions);
         fb = (ImageButton) findViewById(R.id.fb);
         tw = (ImageButton) findViewById(R.id.tw);
+        camera = (ImageButton) findViewById(R.id.camera_launcher);
         initializeUI();
 
         GetMetadata();
@@ -90,7 +91,7 @@ public class RadioActivity extends Activity implements RadioListener{
         });
 
 
-        // SOcial links
+        // Social links
         fb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -106,6 +107,14 @@ public class RadioActivity extends Activity implements RadioListener{
                 Uri uriFB = Uri.parse("https://www.twitter.com/smoothradioca/"); // missing 'http://' will cause crashed
                 Intent intentTW = new Intent(Intent.ACTION_VIEW, uriFB);
                 startActivity(intentTW);
+            }
+        });
+
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent cameraIntent = new Intent(getApplicationContext(), CameraActivity.class);
+                startActivity(cameraIntent);
             }
         });
 

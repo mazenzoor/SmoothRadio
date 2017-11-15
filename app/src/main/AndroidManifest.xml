@@ -2,17 +2,25 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="cloud.thecode.smoothradio">
 
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:theme="@style/AppTheme">
-        <activity android:name=".RadioActivity" android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+        <activity
+            android:name=".RadioActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar">
+            <!-- Main -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
 
         <receiver android:name=".MyBroadcast">
@@ -23,10 +31,15 @@
 
         <activity
             android:name=".promotions"
-            android:parentActivityName=".RadioActivity"
-            android:label="Promotions"
             android:icon="@drawable/ic_promo"
-            android:theme="@android:style/Theme.Holo.Light.NoActionBar"></activity>
+            android:label="Promotions"
+            android:parentActivityName=".RadioActivity"
+            android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
+
+        <activity android:name=".CameraActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait">
+
+        </activity>
     </application>
 
 </manifest>
