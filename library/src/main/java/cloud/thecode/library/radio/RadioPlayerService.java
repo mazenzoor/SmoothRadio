@@ -31,6 +31,7 @@ import cloud.thecode.library.R;
  */
 public class RadioPlayerService extends Service implements PlayerCallback {
 
+
     /**
      * Notification action intent strings
      */
@@ -79,6 +80,9 @@ public class RadioPlayerService extends Service implements PlayerCallback {
         PLAYING,
         STOPPED,
     }
+
+    /* Notification template view */
+    RemoteViews mNotificationTemplate;
 
     List<RadioListener> mListenerList;
 
@@ -139,6 +143,12 @@ public class RadioPlayerService extends Service implements PlayerCallback {
      * Notification manager
      */
     private NotificationManager mNotificationManager;
+
+    /*
+     * Notification
+     */
+
+    Notification notification;
 
     /**
      * Binder
@@ -510,7 +520,7 @@ public class RadioPlayerService extends Service implements PlayerCallback {
          * Remote view for normal view
          */
 
-        RemoteViews mNotificationTemplate = new RemoteViews(this.getPackageName(), R.layout.notification);
+        mNotificationTemplate = new RemoteViews(this.getPackageName(), R.layout.notification);
         Notification.Builder notificationBuilder = new Notification.Builder(this);
 
         /**
@@ -533,7 +543,7 @@ public class RadioPlayerService extends Service implements PlayerCallback {
         /**
          * Create notification instance
          */
-        Notification notification = notificationBuilder
+        notification = notificationBuilder
                 .setSmallIcon(smallImage)
                 .setContentIntent(openPending)
                 .setPriority(Notification.PRIORITY_DEFAULT)
@@ -544,7 +554,7 @@ public class RadioPlayerService extends Service implements PlayerCallback {
 
         /**
          * Expanded notification
-         */
+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
 
             RemoteViews mExpandedView = new RemoteViews(this.getPackageName(), R.layout.notification_expanded);
@@ -560,6 +570,8 @@ public class RadioPlayerService extends Service implements PlayerCallback {
             notification.bigContentView = mExpandedView;
         }
 
+         */
+
         if (mNotificationManager != null)
             mNotificationManager.notify(NOTIFICATION_ID, notification);
 
@@ -573,6 +585,23 @@ public class RadioPlayerService extends Service implements PlayerCallback {
         this.artImage = BitmapFactory.decodeResource(getResources(), artImage);
         buildNotification();
     }
+
+    public void updateNotification(String s1) {
+        this.singerName = s1;
+
+        try {
+            mNotificationTemplate.setTextViewText(R.id.notification_line_one, singerName);
+
+            mNotificationManager.notify(NOTIFICATION_ID, notification);
+        } catch(Exception ex) {
+            ex.printStackTrace();
+        }
+
+
+
+        buildNotification();
+    }
+
 
 
     public void updateNotification(String singerName, String songName, int smallImage, Bitmap artImage) {

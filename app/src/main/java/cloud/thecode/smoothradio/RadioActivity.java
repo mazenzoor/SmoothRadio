@@ -3,6 +3,8 @@ package cloud.thecode.smoothradio;
 import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
+import android.app.NotificationManager;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
@@ -46,6 +48,7 @@ public class RadioActivity extends Activity implements RadioListener{
     String fullString;
     Window window;
     LinearLayout promotion;
+    RadioPlayerService rps = new RadioPlayerService();
 
     PhoneStateListener phoneStateListener;
 
@@ -296,4 +299,11 @@ public class RadioActivity extends Activity implements RadioListener{
 
     }
 
+    @Override
+    protected void onDestroy() {
+        //Remove notification
+        NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
+        notificationManager.cancelAll();
+        super.onDestroy();
+    }
 }
