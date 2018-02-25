@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cloud.thecode.smoothradio">
+    package="cloud.thecode.smoothradio"
+    android:versionCode="2"
+    android:versionName="1.1">
 
-    <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -35,11 +34,6 @@
             android:label="Promotions"
             android:parentActivityName=".RadioActivity"
             android:theme="@android:style/Theme.Holo.Light.NoActionBar" />
-
-        <activity android:name=".CameraActivity" android:theme="@style/Theme.AppCompat.Light.NoActionBar"
-            android:screenOrientation="portrait">
-
-        </activity>
 
     </application>
 

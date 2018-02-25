@@ -98,8 +98,12 @@ public class RadioManager implements IRadioManager {
      */
     @Override
     public boolean isPlaying() {
-        log("IsPlaying : " + mService.isPlaying());
-        return mService.isPlaying();
+        if(mService != null) {
+            log("IsPlaying : " + mService.isPlaying());
+            return mService.isPlaying();
+        }
+
+        return false;
     }
 
     /**
@@ -163,6 +167,11 @@ public class RadioManager implements IRadioManager {
     public void updateNotification(String singerName, String songName, int smallArt, int bigArt) {
         if(mService != null)
             mService.updateNotification(singerName, songName, smallArt, bigArt);
+    }
+
+    public void updateNotification(String singerName) {
+        if(mService != null)
+            mService.updateNotification(singerName);
     }
 
     /**

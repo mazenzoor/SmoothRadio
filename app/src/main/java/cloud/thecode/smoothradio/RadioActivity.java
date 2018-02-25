@@ -4,12 +4,14 @@ import android.animation.ArgbEvaluator;
 import android.animation.ValueAnimator;
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v7.app.NotificationCompat;
 import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.text.Html;
@@ -21,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
@@ -39,7 +42,7 @@ public class RadioActivity extends Activity implements RadioListener{
 
     private final String[] RADIO_URL = {"http://in2streaming.com:9999"};
     TextView song_title_view;
-    ImageButton mButtonControlStart, fb, tw, camera;
+    ImageButton mButtonControlStart, fb, tw;
     RadioManager mRadioManager;
     ProgressBar loader;
     final int darkBlue = Color.parseColor("#222939");
@@ -49,6 +52,7 @@ public class RadioActivity extends Activity implements RadioListener{
     Window window;
     LinearLayout promotion;
     RadioPlayerService rps = new RadioPlayerService();
+    private boolean playStatus = false;
 
     PhoneStateListener phoneStateListener;
 
@@ -73,7 +77,6 @@ public class RadioActivity extends Activity implements RadioListener{
         promotion = (LinearLayout) findViewById(R.id.promotions);
         fb = (ImageButton) findViewById(R.id.fb);
         tw = (ImageButton) findViewById(R.id.tw);
-        camera = (ImageButton) findViewById(R.id.camera_launcher);
         initializeUI();
 
         GetMetadata();
@@ -113,13 +116,6 @@ public class RadioActivity extends Activity implements RadioListener{
             }
         });
 
-        camera.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent cameraIntent = new Intent(getApplicationContext(), CameraActivity.class);
-                startActivity(cameraIntent);
-            }
-        });
 
     }
 
@@ -143,6 +139,16 @@ public class RadioActivity extends Activity implements RadioListener{
     protected void onResume() {
         super.onResume();
         mRadioManager.connect();
+
+        if(mRadioManager != null) {
+            if(mRadioManager.isPlaying()) {
+                playing();
+            } else {
+                paused();
+            }
+        }
+
+
     }
 
     @Override
@@ -189,10 +195,15 @@ public class RadioActivity extends Activity implements RadioListener{
                 }
             }
         });
+
+
+
+
     }
 
     @Override
     public void onRadioStopped() {
+        playStatus = false;
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
@@ -212,11 +223,12 @@ public class RadioActivity extends Activity implements RadioListener{
 
     @Override
     public void onError() {
-
+        playStatus = false;
     }
 
 
     public void playing() {
+        playStatus = true;
         //playing state
         mButtonControlStart.setImageResource(R.drawable.ic_pause);
         ValueAnimator anim = new ValueAnimator();
@@ -238,6 +250,8 @@ public class RadioActivity extends Activity implements RadioListener{
 
     public void paused() {
         //pause
+        playStatus = false;
+
         mButtonControlStart.setImageResource(R.drawable.ic_play);
 
         ValueAnimator anim = new ValueAnimator();
@@ -293,6 +307,9 @@ public class RadioActivity extends Activity implements RadioListener{
                     song_title_view.setText(d);
                 }
             });
+
+            if(mRadioManager != null)
+                mRadioManager.updateNotification(text);
 
 
         }

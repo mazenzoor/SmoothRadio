@@ -1,6 +1,8 @@
 <manifest
     xmlns:android="http://schemas.android.com/apk/res/android"
-    package="cloud.thecode.library">
+    package="cloud.thecode.library"
+    android:versionCode="2"
+    android:versionName="2.1">
 
     <uses-permission android:name="android.permission.INTERNET"/>
     <uses-permission android:name="android.permission.READ_PHONE_STATE"/>

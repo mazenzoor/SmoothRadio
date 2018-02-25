@@ -17,7 +17,7 @@
 
     <LinearLayout
         android:id="@+id/layoutTexts"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_weight="1"
@@ -29,14 +29,15 @@
             android:id="@+id/notification_line_one"
             style="@style/NotificationText"
             android:text="Smooth Radio"
-            android:textAppearance="@android:style/TextAppearance.StatusBar.EventContent.Title"
+            android:textStyle="bold"
             android:textColor="#444444"/>
 
         <TextView
             android:id="@+id/notification_line_two"
             style="@style/NotificationText"
             android:text="Winnipeg's best slow mix"
-            android:textAppearance="@android:style/TextAppearance.StatusBar.EventContent"/>
+            android:textColor="#888888"
+            />
 
     </LinearLayout>
 

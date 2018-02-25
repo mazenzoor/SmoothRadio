@@ -16,6 +16,7 @@ import android.telephony.PhoneStateListener;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.widget.RemoteViews;
+import android.widget.Toast;
 
 import com.spoledge.aacdecoder.MultiPlayer;
 import com.spoledge.aacdecoder.PlayerCallback;
@@ -40,6 +41,9 @@ public class RadioPlayerService extends Service implements PlayerCallback {
     public static final String NOTIFICATION_INTENT_CANCEL = "co.mobiwise.library.notification.radio.INTENT_CANCEL";
 
     public static final String NOTIFICATION_INTENT_OPEN_PLAYER = "co.mobiwise.library.notification.radio.INTENT_OPENPLAYER";
+
+    public static final String NOTIFICATION_INTENT_MY_PLAYER = "cloud.thecode.library.radio.RadioManager";
+
 
     /**
      * Notification current values
@@ -529,8 +533,8 @@ public class RadioPlayerService extends Service implements PlayerCallback {
         if (artImage == null)
             artImage = BitmapFactory.decodeResource(getResources(), R.drawable.default_art);
 
-        mNotificationTemplate.setTextViewText(R.id.notification_line_one, singerName);
-        mNotificationTemplate.setTextViewText(R.id.notification_line_two, songName);
+        mNotificationTemplate.setTextViewText(R.id.notification_line_one, "Smooth Radio");
+        mNotificationTemplate.setTextViewText(R.id.notification_line_two, "listen live");
         mNotificationTemplate.setImageViewResource(R.id.notification_play, isPlaying() ? R.drawable.ic_pink_pause : R.drawable.ic_play);
         mNotificationTemplate.setImageViewBitmap(R.id.notification_image, artImage);
 
@@ -539,6 +543,10 @@ public class RadioPlayerService extends Service implements PlayerCallback {
          */
         mNotificationTemplate.setOnClickPendingIntent(R.id.notification_collapse, cancelPending);
         mNotificationTemplate.setOnClickPendingIntent(R.id.notification_play, playPausePending);
+
+
+
+
 
         /**
          * Create notification instance
@@ -587,20 +595,27 @@ public class RadioPlayerService extends Service implements PlayerCallback {
     }
 
     public void updateNotification(String s1) {
-        this.singerName = s1;
+        if(isPlaying()) {
+            this.singerName = s1;
+            int api = Build.VERSION.SDK_INT;
 
-        try {
-            mNotificationTemplate.setTextViewText(R.id.notification_line_one, singerName);
-
-            mNotificationManager.notify(NOTIFICATION_ID, notification);
-        } catch(Exception ex) {
-            ex.printStackTrace();
+            try {
+                mNotificationTemplate.setTextViewText(R.id.notification_line_one, s1);
+                mNotificationTemplate.setTextViewText(R.id.notification_line_two, "Smooth Radio");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+            if (mNotificationManager != null && notification != null) {
+                // update the notification
+                if (api < Build.VERSION_CODES.HONEYCOMB) {
+                    mNotificationManager.notify(NOTIFICATION_ID, notification);
+                } else if (api >= Build.VERSION_CODES.HONEYCOMB) {
+                    mNotificationManager.notify(NOTIFICATION_ID, notification);
+                }
+            }
         }
-
-
-
-        buildNotification();
     }
+
 
 
 
